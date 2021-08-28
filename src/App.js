@@ -32,19 +32,18 @@ function App() {
     endDragging();
   };
 
-  const handleFrameDrop = () => {
+  const handleDrop = async (evt) => {
+    const files = evt.dataTransfer.files;
     endDragging();
-  };
-
-  const handleDrop = async (files) => {
     const images = [];
 
     for (let i = 0; i < files.length; i++) {
+      console.log("Working ", i);
       const string = await blobToBase64(files[0]);
       images.push(string);
     }
 
-    endDragging();
+    console.log("images =>", images);
   };
 
   return (
@@ -52,8 +51,8 @@ function App() {
       <FileDrop
         onFrameDragEnter={handleOnFrameDragEnter}
         onFrameDragLeave={handleOnFrameDragLeave}
-        onFrameDrop={handleFrameDrop}
-        onDrop={handleDrop}
+        onFrameDrop={handleDrop}
+      
       >
         <div className="app-upload-container">
           {isDragging ? (
